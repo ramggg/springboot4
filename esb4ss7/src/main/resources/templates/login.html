@@ -7,34 +7,49 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 class="h4 text-center mb-4">Sign In</h2>
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--color-dark);">Sign In</h2>
 
+    <!-- Error Message -->
     <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        Invalid username or password.
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>Invalid username or password</span>
     </div>
 
+    <!-- Logout Message -->
     <div th:if="${param.logout}" class="alert alert-success" role="alert">
-        You have been logged out.
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>You have been successfully logged out</span>
     </div>
 
+    <!-- Login Form -->
     <form method="POST" th:action="@{/login}">
-        <div class="mb-3">
+        <div class="form-group">
             <label for="username" class="form-label">Username</label>
-            <input type="text" id="username" name="username" class="form-control" required autofocus>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autofocus>
         </div>
-        <div class="mb-3">
+
+        <div class="form-group">
             <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
         </div>
-        <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="width: 100%; margin-top: var(--spacing-lg);">
+            Sign In
+        </button>
     </form>
 
-    <hr class="my-4">
+    <!-- Divider -->
+    <div class="auth-divider">or</div>
 
-    <div class="text-center">
-        <p class="mb-0">Don't have an account? <a th:href="@{/register}">Sign Up</a></p>
+    <!-- Sign Up Link -->
+    <div class="auth-footer">
+        <p>Don't have an account? <a th:href="@{/register}">Create one now</a></p>
     </div>
 </div>
 </body>
