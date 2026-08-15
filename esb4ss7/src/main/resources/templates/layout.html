@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6"
+      lang="en"
+      class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE | TaskManager">TaskManager</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Custom App Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .footer {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100">
+
+    <!-- 1. Header -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" th:href="@{/}">TaskManager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0" sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home}" th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active' : ''}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/tasks}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/tasks') ? 'active' : ''}">My Tasks</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center" sec:authorize="isAuthenticated()">
+                        <span class="navbar-text me-3">
+                            Welcome, <strong sec:authentication="name" class="fw-semibold"></strong>
+                        </span>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 2. Body / Main Content -->
+    <main class="flex-shrink-0" style="margin-top: 70px;">
+        <div class="container py-4">
+            <div layout:fragment="content">
+                <!-- Page-specific content will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 3. Footer -->
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">&copy; 2026 TaskManager. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

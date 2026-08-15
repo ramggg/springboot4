@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>My Tasks</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2">My Tasks</h1>
+        <a th:href="@{/tasks/new}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+            </svg>
+            New Task
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div th:if="${tasks.isEmpty()}" class="text-center p-4">
+                <p class="mb-0 text-muted">You have no tasks yet. Create one!</p>
+            </div>
+
+            <div class="table-responsive" th:if="${!tasks.isEmpty()}">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="task : ${tasks}">
+                            <td class="fw-semibold" th:text="${task.title}"></td>
+                            <td th:text="${#temporals.format(task.dueDate, 'MMM dd, yyyy')}"></td>
+                            <td>
+                                <span class="badge"
+                                      th:text="${task.status}"
+                                      th:classappend="${task.status == 'Done' ? 'text-bg-success' : (task.status == 'In Progress' ? 'text-bg-warning' : 'text-bg-secondary')}">
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" class="d-inline ms-1">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
