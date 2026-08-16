@@ -26,6 +26,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-h2console'
 	runtimeOnly 'com.h2database:h2'
 
+	// Bootstrap 5 & Icons served locally (no CDN dependency)
+	implementation 'org.webjars:bootstrap:5.3.3'
+	implementation 'org.webjars.npm:bootstrap-icons:1.11.3'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
