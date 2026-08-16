@@ -4,165 +4,101 @@
       layout:decorate="~{layout}">
 <head>
     <title>My Tasks</title>
-    <style>
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-2xl);
-            flex-wrap: wrap;
-            gap: var(--spacing-lg);
-        }
-        
-        .task-header h1 {
-            margin: 0;
-        }
-        
-        .task-table {
-            width: 100%;
-        }
-        
-        .task-table tbody tr {
-            transition: background-color var(--transition-fast);
-        }
-        
-        .task-table tbody tr:hover {
-            background-color: var(--color-bg-light);
-        }
-        
-        .task-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: flex-end;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: var(--spacing-3xl) var(--spacing-xl);
-        }
-        
-        .empty-state svg {
-            width: 80px;
-            height: 80px;
-            color: var(--color-text-light);
-            margin-bottom: var(--spacing-lg);
-            opacity: 0.5;
-        }
-        
-        .empty-state h3 {
-            color: var(--color-text-light);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        @media (max-width: 768px) {
-            .task-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .task-header .btn {
-                width: 100%;
-            }
-            
-            .task-table {
-                font-size: var(--font-size-sm);
-            }
-            
-            .task-actions {
-                flex-direction: column;
-            }
-            
-            .task-actions .btn {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <!-- Header with Title and New Task Button -->
-    <div class="task-header">
-        <h1>My Tasks</h1>
-        <a th:href="@{/tasks/new}" class="btn btn-primary btn-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            New Task
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h1 class="h3 fw-bold text-dark mb-1">
+                <i class="bi bi-list-task text-primary me-2"></i>My Tasks
+            </h1>
+            <p class="text-muted mb-0 small">Manage and track all your tasks in one place.</p>
+        </div>
+        <a th:href="@{/tasks/new}" class="btn btn-primary fw-semibold rounded-3 px-4">
+            <i class="bi bi-plus-lg me-2"></i>New Task
         </a>
     </div>
 
-    <!-- Tasks Card -->
-    <div class="card">
+    <!-- ===== TASK CARD ===== -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
         <!-- Empty State -->
-        <div th:if="${tasks.isEmpty()}" class="empty-state">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 11l3 3L22 4"></path>
-                <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <h3>No Tasks Yet</h3>
-            <p class="text-muted">You have no tasks at the moment. <a th:href="@{/tasks/new}">Create one now</a> to get started!</p>
+        <div th:if="${tasks.isEmpty()}" class="text-center py-5 px-3">
+            <div class="empty-state-icon mb-3">
+                <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
+            </div>
+            <h5 class="fw-semibold text-dark mb-2">No Tasks Yet</h5>
+            <p class="text-muted mb-4 small">You have no tasks at the moment. Create one to get started!</p>
+            <a th:href="@{/tasks/new}" class="btn btn-primary rounded-3 px-4 fw-semibold">
+                <i class="bi bi-plus-lg me-2"></i>Create Your First Task
+            </a>
         </div>
 
         <!-- Tasks Table -->
-        <div th:if="${!tasks.isEmpty()}" class="card-body" style="padding: 0;">
-            <div style="overflow-x: auto;">
-                <table class="task-table">
-                    <thead style="background-color: var(--color-bg-light); border-bottom: 2px solid var(--color-border);">
-                        <tr>
-                            <th style="padding: var(--spacing-lg); text-align: left; font-weight: 700; color: var(--color-dark);">Title</th>
-                            <th style="padding: var(--spacing-lg); text-align: left; font-weight: 700; color: var(--color-dark);">Due Date</th>
-                            <th style="padding: var(--spacing-lg); text-align: left; font-weight: 700; color: var(--color-dark);">Status</th>
-                            <th style="padding: var(--spacing-lg); text-align: right; font-weight: 700; color: var(--color-dark);">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="task : ${tasks}" style="border-bottom: 1px solid var(--color-border);">
-                            <td style="padding: var(--spacing-lg);">
-                                <strong style="color: var(--color-dark);" th:text="${task.title}"></strong>
-                            </td>
-                            <td style="padding: var(--spacing-lg); color: var(--color-text-light);">
-                                <th:block th:if="${task.dueDate}">
+        <div th:if="${!tasks.isEmpty()}" class="table-responsive">
+            <table class="table table-hover align-middle mb-0 table-tasks">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3 text-uppercase small fw-bold text-muted" style="letter-spacing:0.05em;">Title</th>
+                        <th class="py-3 text-uppercase small fw-bold text-muted" style="letter-spacing:0.05em;">Due Date</th>
+                        <th class="py-3 text-uppercase small fw-bold text-muted" style="letter-spacing:0.05em;">Status</th>
+                        <th class="py-3 text-uppercase small fw-bold text-muted text-end pe-4" style="letter-spacing:0.05em;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td class="ps-4 py-3">
+                            <span class="fw-semibold text-dark" th:text="${task.title}"></span>
+                        </td>
+                        <td class="py-3">
+                            <th:block th:if="${task.dueDate}">
+                                <span class="text-muted small">
+                                    <i class="bi bi-calendar3 me-1"></i>
                                     <span th:text="${#temporals.format(task.dueDate, 'MMM dd, yyyy')}"></span>
-                                </th:block>
-                                <th:block th:unless="${task.dueDate}">
-                                    <span class="text-muted">Not set</span>
-                                </th:block>
-                            </td>
-                            <td style="padding: var(--spacing-lg);">
-                                <span class="badge" 
-                                      th:text="${task.status}"
-                                      th:classappend="${task.status == 'Done' ? 'badge-success' : (task.status == 'In Progress' ? 'badge-warning' : 'badge-secondary')}">
                                 </span>
-                            </td>
-                            <td style="padding: var(--spacing-lg);">
-                                <div class="task-actions">
-                                    <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-outline btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                        </svg>
-                                        Edit
-                                    </a>
-                                    <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" style="margin: 0;">
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                                            </svg>
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </th:block>
+                            <th:block th:unless="${task.dueDate}">
+                                <span class="text-muted small fst-italic">Not set</span>
+                            </th:block>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge rounded-pill px-3 py-2 small fw-semibold"
+                                  th:text="${task.status}"
+                                  th:classappend="${task.status == 'Done'        ? 'badge-done' :
+                                                  (task.status == 'In Progress'  ? 'badge-inprogress' :
+                                                                                   'badge-todo')}">
+                            </span>
+                        </td>
+                        <td class="py-3 pe-4">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <a th:href="@{/tasks/edit/{id}(id=${task.id})}"
+                                   class="btn btn-outline-primary btn-sm rounded-3 fw-semibold">
+                                    <i class="bi bi-pencil me-1"></i>Edit
+                                </a>
+                                <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" class="m-0">
+                                    <button type="submit"
+                                            class="btn btn-outline-danger btn-sm rounded-3 fw-semibold"
+                                            onclick="return confirm('Are you sure you want to delete this task?')">
+                                        <i class="bi bi-trash me-1"></i>Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
     </div>
+
+    <!-- ===== FOOTER NOTE ===== -->
+    <div th:if="${!tasks.isEmpty()}" class="text-muted small text-center mt-3">
+        <i class="bi bi-info-circle me-1"></i>
+        Showing all your tasks. Use <strong>Edit</strong> to update status or details.
+    </div>
+
 </div>
 </body>
 </html>

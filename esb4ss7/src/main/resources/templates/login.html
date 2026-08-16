@@ -7,50 +7,65 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 class="text-center mb-4 fw-bold" style="color: var(--color-dark);">Sign In</h2>
 
-    <!-- Error Message -->
-    <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <span>Invalid username or password</span>
+    <h2 class="h4 fw-bold text-center mb-4 text-dark">Sign In</h2>
+
+    <!-- Error Alert -->
+    <div th:if="${param.error}" class="alert alert-danger d-flex align-items-center gap-2 rounded-3 mb-3" role="alert">
+        <i class="bi bi-exclamation-circle-fill flex-shrink-0"></i>
+        <span>Invalid username or password. Please try again.</span>
     </div>
 
-    <!-- Logout Message -->
-    <div th:if="${param.logout}" class="alert alert-success" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span>You have been successfully logged out</span>
+    <!-- Logout Success Alert -->
+    <div th:if="${param.logout}" class="alert alert-success d-flex align-items-center gap-2 rounded-3 mb-3" role="alert">
+        <i class="bi bi-check-circle-fill flex-shrink-0"></i>
+        <span>You have been successfully logged out.</span>
     </div>
 
     <!-- Login Form -->
     <form method="POST" th:action="@{/login}">
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autofocus>
+        <div class="mb-3">
+            <label for="username" class="form-label fw-semibold small text-dark">Username</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                    <i class="bi bi-person text-muted"></i>
+                </span>
+                <input type="text" id="username" name="username"
+                       class="form-control border-start-0 ps-0"
+                       placeholder="Enter your username"
+                       required autofocus>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        <div class="mb-4">
+            <label for="password" class="form-label fw-semibold small text-dark">Password</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light border-end-0">
+                    <i class="bi bi-lock text-muted"></i>
+                </span>
+                <input type="password" id="password" name="password"
+                       class="form-control border-start-0 ps-0"
+                       placeholder="Enter your password"
+                       required>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" style="width: 100%; margin-top: var(--spacing-lg);">
-            Sign In
-        </button>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg fw-semibold rounded-3">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+            </button>
+        </div>
     </form>
 
     <!-- Divider -->
     <div class="auth-divider">or</div>
 
     <!-- Sign Up Link -->
-    <div class="auth-footer">
-        <p>Don't have an account? <a th:href="@{/register}">Create one now</a></p>
-    </div>
+    <p class="text-center text-muted small mb-0">
+        Don't have an account?
+        <a th:href="@{/register}" class="text-primary fw-semibold text-decoration-none">Create one now</a>
+    </p>
+
 </div>
 </body>
 </html>

@@ -7,75 +7,79 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <!-- Welcome Section -->
-    <div style="text-align: center; padding: var(--spacing-2xl) var(--spacing-lg); margin-bottom: var(--spacing-2xl);">
-        <h1 style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-md);">Welcome to TaskManager</h1>
-        <p style="font-size: var(--font-size-lg); color: var(--color-text-light); max-width: 600px; margin: 0 auto var(--spacing-xl);">
-            A modern, clean, and responsive application to help you organize and manage your tasks efficiently. Get started by creating your first task!
+
+    <!-- ===== HERO SECTION ===== -->
+    <div class="text-center py-5 mb-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2 rounded-pill mb-3 d-inline-block" style="font-size:0.8rem; letter-spacing:0.05em;">
+            <i class="bi bi-stars me-1"></i>Your personal task hub
+        </span>
+        <h1 class="display-5 fw-bold text-dark mb-3">Welcome to <span style="color:#4f46e5;">TaskManager</span></h1>
+        <p class="lead text-muted mx-auto mb-4" style="max-width:580px;">
+            A modern, clean application to help you organize, track, and complete your tasks with ease. Get started in seconds.
         </p>
-        <a th:href="@{/tasks}" class="btn btn-primary btn-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"></path>
-            </svg>
-            Go to My Tasks
-        </a>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a th:href="@{/tasks}" class="btn btn-primary btn-lg px-4 fw-semibold rounded-3 shadow-sm">
+                <i class="bi bi-list-task me-2"></i>View My Tasks
+            </a>
+            <a th:href="@{/tasks/new}" class="btn btn-outline-primary btn-lg px-4 fw-semibold rounded-3">
+                <i class="bi bi-plus-circle me-2"></i>Create a Task
+            </a>
+        </div>
     </div>
 
-    <!-- Features Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl);">
+    <!-- ===== FEATURE CARDS ===== -->
+    <div class="row g-4 mb-5">
         <!-- Feature 1 -->
-        <div class="card">
-            <div class="card-body" style="text-align: center; padding: var(--spacing-xl);">
-                <div style="font-size: 2.5rem; margin-bottom: var(--spacing-md);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 11l3 3L22 4"></path>
-                        <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 card-hover">
+                <div class="card-body text-center p-4 p-lg-5">
+                    <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-3 p-3" style="background-color:#ede9fe;">
+                        <i class="bi bi-check-circle-fill text-primary fs-2"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Easy Task Management</h5>
+                    <p class="text-muted mb-0 small">Create, organize, and track your tasks with a simple and intuitive interface. Stay on top of everything.</p>
                 </div>
-                <h3 style="font-size: var(--font-size-lg); margin-bottom: var(--spacing-md);">Easy Task Management</h3>
-                <p style="color: var(--color-text-light); margin-bottom: 0;">Create, organize, and track your tasks with a simple and intuitive interface.</p>
             </div>
         </div>
 
         <!-- Feature 2 -->
-        <div class="card">
-            <div class="card-body" style="text-align: center; padding: var(--spacing-xl);">
-                <div style="font-size: 2.5rem; margin-bottom: var(--spacing-md);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 card-hover">
+                <div class="card-body text-center p-4 p-lg-5">
+                    <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-3 p-3" style="background-color:#ede9fe;">
+                        <i class="bi bi-shield-lock-fill text-primary fs-2"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Secure &amp; Private</h5>
+                    <p class="text-muted mb-0 small">Your tasks are private and only accessible to you. Backed by Spring Security for robust protection.</p>
                 </div>
-                <h3 style="font-size: var(--font-size-lg); margin-bottom: var(--spacing-md);">Secure & Private</h3>
-                <p style="color: var(--color-text-light); margin-bottom: 0;">Your tasks are encrypted and only accessible to you. Your privacy is our priority.</p>
             </div>
         </div>
 
         <!-- Feature 3 -->
-        <div class="card">
-            <div class="card-body" style="text-align: center; padding: var(--spacing-xl);">
-                <div style="font-size: 2.5rem; margin-bottom: var(--spacing-md);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <path d="M12 1v6m0 6v6"></path>
-                        <path d="M4.22 4.22l4.24 4.24m3.08 3.08l4.24 4.24"></path>
-                        <path d="M1 12h6m6 0h6"></path>
-                        <path d="M4.22 19.78l4.24-4.24m3.08-3.08l4.24-4.24"></path>
-                    </svg>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 card-hover">
+                <div class="card-body text-center p-4 p-lg-5">
+                    <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-3 p-3" style="background-color:#ede9fe;">
+                        <i class="bi bi-arrow-repeat text-primary fs-2"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Always in Sync</h5>
+                    <p class="text-muted mb-0 small">Access your tasks from anywhere. Your data is always up-to-date and available whenever you need it.</p>
                 </div>
-                <h3 style="font-size: var(--font-size-lg); margin-bottom: var(--spacing-md);">Always in Sync</h3>
-                <p style="color: var(--color-text-light); margin-bottom: 0;">Access your tasks from anywhere. Your data is always up-to-date across all devices.</p>
             </div>
         </div>
     </div>
 
-    <!-- Quick Stats -->
-    <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); color: white; padding: var(--spacing-2xl); border-radius: var(--radius-xl); text-align: center;">
-        <h2 style="color: white; margin-bottom: var(--spacing-xl);">Get Started Today</h2>
-        <p style="margin-bottom: var(--spacing-xl); font-size: var(--font-size-lg);">Start organizing your tasks and boost your productivity. It takes just 30 seconds to create your first task.</p>
-        <a th:href="@{/tasks/new}" class="btn" style="background-color: white; color: var(--color-primary); font-weight: 600;">
-            Create Your First Task
+    <!-- ===== CTA BANNER ===== -->
+    <div class="hero-gradient text-white text-center p-5">
+        <h2 class="fw-bold mb-3">Ready to boost your productivity?</h2>
+        <p class="mb-4 opacity-90" style="font-size:1.05rem;">
+            Start organizing your work today. Creating your first task takes less than 30 seconds.
+        </p>
+        <a th:href="@{/tasks/new}" class="btn btn-light btn-lg px-5 fw-bold rounded-3 shadow" style="color:#4f46e5;">
+            <i class="bi bi-plus-lg me-2"></i>Create Your First Task
         </a>
     </div>
+
 </div>
 </body>
 </html>
